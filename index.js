@@ -2,6 +2,8 @@ const express = require("express");
 require("dotenv/config");
 // const { connectionDB, getDB } = require("./db");
 const User = require("./routes/User");
+const Member = require("./routes/Member");
+
 //app init and middleware
 const app = express();
 app.use(express.json());
@@ -15,9 +17,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", User);
+app.use("/api/member", Member);
 
-app.listen(3000, () => {
-  console.log("listen on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log("Server Start");
 });
 // app.use((req, res, next) => {
 //   console.log("in app use");
