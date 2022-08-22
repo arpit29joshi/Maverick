@@ -20,14 +20,14 @@ const register = async (req, res) => {
     !UserName ||
     !mobileNumber
   ) {
-    res.status(400).json({ msg: "All fields musts be filled" });
+    return res.status(400).json({ msg: "All fields musts be filled" });
   }
 
   if (!validator.isEmail(email)) {
-    res.status(400).json({ msg: "Email is not valid" });
+    return res.status(400).json({ msg: "Email is not valid" });
   }
   if (!validator.isStrongPassword(password)) {
-    res.status(400).json({
+    return res.status(400).json({
       msg: "Password is not strong enough (min 7 letter and include special char. and no.)",
     });
   }
@@ -38,9 +38,7 @@ const register = async (req, res) => {
   try {
     const user = await registerModel({ obj: req.body, password: hash });
     const token = createToken(user._id);
-    res.status(200).json({ email, token });
-
-    res.status(200).json({});
+    res.status(201).json({ email, token });
   } catch (error) {
     res.status(404).json({
       error: error.message,
